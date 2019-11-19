@@ -34,6 +34,12 @@ public class IntegrationRoute extends RouteBuilder {
     @Value("${app.initialDownloadDelay}")
     private String initialDownloadDelay;
 
+    @Value("${app.importDelay}")
+    private String importDelay;
+
+    @Value("${app.initialImportDelay}")
+    private String initialImportDelay;
+
     @Value("${app.dbHostWmts}")
     private String dbHostWmts;
     
@@ -68,7 +74,7 @@ public class IntegrationRoute extends RouteBuilder {
             .end()
         .end();
 
-        from("file://"+pathToUnzipFolder+"/?noop=true&charset=ISO-8859-1&include=.*\\.itf&delay=30000&initialDelay=2000&readLock=changed")
+        from("file://"+pathToUnzipFolder+"/?noop=true&charset=ISO-8859-1&include=.*\\.itf&delay="+importDelay+"&initialDelay="+initialImportDelay+"&readLock=changed")
         .routeId("_ili2pg_")
         .log(LoggingLevel.INFO, "Importing File: ${in.header.CamelFileNameOnly}")
         .setProperty("dbhost", constant(dbHostWmts))
@@ -79,9 +85,5 @@ public class IntegrationRoute extends RouteBuilder {
         .setProperty("dbpwd", constant(dbPwdWmts))
         .setProperty("dataset", simple("${header.CamelFileName.substring(0,4)}"))
         .process(new Ili2pgReplaceProcessor());
-
-        
-        
     }
-
 }

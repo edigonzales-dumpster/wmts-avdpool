@@ -40,8 +40,6 @@ public class Ili2pgReplaceProcessor implements Processor {
         String dburl = "jdbc:postgresql://" + settings.getDbhost() + ":" + settings.getDbport() + "/" + settings.getDbdatabase();
         settings.setDburl(dburl);
 
-        
-//        settings.setNameOptimization(settings.NAME_OPTIMIZATION_TOPIC);
         settings.setValidation(false);
         
         if (Ili2db.isItfFilename(xtfFile.getAbsolutePath())) {
