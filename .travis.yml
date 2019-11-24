@@ -16,7 +16,7 @@ branches:
 install: true
 
 script:
-  - ./gradlew clean build buildDockerImage
+  - ./gradlew clean build buildDockerImage -x test
 
 deploy:
   - provider: script
