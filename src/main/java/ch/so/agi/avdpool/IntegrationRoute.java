@@ -60,21 +60,21 @@ public class IntegrationRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("ftp://"+ftpUserInfogrips+"@"+ftpUrlInfogrips+"/\\dm01avso24lv95\\itf\\?password="+ftpPwdInfogrips+"&antInclude=*.zip&autoCreate=false&noop=true&readLock=changed&stepwise=false&separator=Windows&passiveMode=true&binary=true&delay="+downloadDelay+"&initialDelay="+initialDownloadDelay+"&idempotentRepository=#fileConsumerRepo&idempotentKey=ftp-${file:name}-${file:size}-${file:modified}")
-        //from("ftp://"+ftpUserInfogrips+"@"+ftpUrlInfogrips+"/\\dm01avso24lv95\\itf\\?password="+ftpPwdInfogrips+"&antInclude=240100.zip&autoCreate=false&noop=true&readLock=changed&stepwise=false&separator=Windows&passiveMode=true&binary=true&delay="+downloadDelay+"&initialDelay="+initialDownloadDelay+"&idempotentRepository=#fileConsumerRepo&idempotentKey=ftp-${file:name}-${file:size}-${file:modified}")
-        .routeId("_download_")
-        .log(LoggingLevel.INFO, "Downloading and unzipping route: ${in.header.CamelFileNameOnly}")
-        .to("file://"+pathToDownloadFolder)
-        .split(new ZipSplitter())
-        .streaming().convertBodyTo(String.class, "ISO-8859-1") 
-            .choice()
-                .when(body().isNotNull())
-                    .setHeader(Exchange.FILE_NAME, simple("${file:name.noext}.itf"))
-                    .to("file://"+pathToUnzipFolder+"?charset=ISO-8859-1")
-            .end()
-        .end();
+//        from("ftp://"+ftpUserInfogrips+"@"+ftpUrlInfogrips+"/\\dm01avso24lv95\\itf\\?password="+ftpPwdInfogrips+"&antInclude=*.zip&autoCreate=false&noop=true&readLock=changed&stepwise=false&separator=Windows&passiveMode=true&binary=true&delay="+downloadDelay+"&initialDelay="+initialDownloadDelay+"&idempotentRepository=#fileConsumerRepo&idempotentKey=ftp-${file:name}-${file:size}-${file:modified}")
+//        //from("ftp://"+ftpUserInfogrips+"@"+ftpUrlInfogrips+"/\\dm01avso24lv95\\itf\\?password="+ftpPwdInfogrips+"&antInclude=240100.zip&autoCreate=false&noop=true&readLock=changed&stepwise=false&separator=Windows&passiveMode=true&binary=true&delay="+downloadDelay+"&initialDelay="+initialDownloadDelay+"&idempotentRepository=#fileConsumerRepo&idempotentKey=ftp-${file:name}-${file:size}-${file:modified}")
+//        .routeId("_download_")
+//        .log(LoggingLevel.INFO, "Downloading and unzipping route: ${in.header.CamelFileNameOnly}")
+//        .to("file://"+pathToDownloadFolder)
+//        .split(new ZipSplitter())
+//        .streaming().convertBodyTo(String.class, "ISO-8859-1") 
+//            .choice()
+//                .when(body().isNotNull())
+//                    .setHeader(Exchange.FILE_NAME, simple("${file:name.noext}.itf"))
+//                    .to("file://"+pathToUnzipFolder+"?charset=ISO-8859-1")
+//            .end()
+//        .end();
 
-        from("file://"+pathToUnzipFolder+"/?noop=true&charset=ISO-8859-1&include=.*\\.itf&delay="+importDelay+"&initialDelay="+initialImportDelay+"&readLock=changed")
+        from("file://"+pathToUnzipFolder+"/?noop=true&charset=ISO-8859-1&include=.*\\.itf&delay="+importDelay+"&initialDelay="+initialImportDelay+"&readLock=changed&idempotentRepository=#fileConsumerRepo&idempotentKey=ili2pg-${file:name}-${file:size}-${file:modified}")
         .routeId("_ili2pg_")
         .log(LoggingLevel.INFO, "Importing File: ${in.header.CamelFileNameOnly}")
         .setProperty("dbhost", constant(dbHostWmts))
