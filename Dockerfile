@@ -4,8 +4,7 @@ EXPOSE 8080
 
 WORKDIR /home/avdpool
 
-ARG JAR_FILE
-COPY ${JAR_FILE} /home/avdpool/app.jar
+COPY build/libs/wmts-avdpool-*.jar /home/avdpool/app.jar
 RUN chown -R 1001:0 /home/avdpool && \
     chmod -R g=u /home/avdpool
 
