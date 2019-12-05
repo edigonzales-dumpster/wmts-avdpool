@@ -8,11 +8,6 @@ jdk:
 services:
   - docker
 
-branches:
-  only:
-    - master
-    - stable
-
 install: true
 
 script:
