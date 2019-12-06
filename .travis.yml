@@ -21,7 +21,7 @@ deploy:
       branch: master    
   - provider: script
     skip_cleanup: true
-    script: curl --insecure -X POST https://wmts-t.sogeo.services:9443/api/webhooks/6cafe370-d28d-4194-9495-b6b95e0ef58a
+    script: curl --insecure -X POST $PORTAINER_HOOK
     on:
       branch: master    
 
