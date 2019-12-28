@@ -1,4 +1,4 @@
-package ch.so.agi.avdpool;
+package ch.so.agi.wmts;
 
 import java.io.File;
 

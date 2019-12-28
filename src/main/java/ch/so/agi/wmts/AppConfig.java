@@ -1,4 +1,4 @@
-package ch.so.agi.avdpool;
+package ch.so.agi.wmts;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

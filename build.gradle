@@ -7,7 +7,7 @@ plugins {
 
 apply from: "$rootDir/gradle/versioning.gradle"
 
-group = 'ch.so.agi.avdpool'
+group = 'ch.so.agi.wmts'
 
 ext {
     apacheCamelVersion = "3.0.0"
@@ -44,6 +44,18 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
+task deleteFilesJarDir(type: Delete) {
+    delete fileTree("${buildDir}/dependency/")//.listFiles()
+    delete file("${buildDir}/dependency/")
+}
+
+task unzipJar(type: Copy) {
+    from zipTree(file("${buildDir}/libs/wmts-avdpool-"+version+".jar"))
+    into file("${buildDir}/dependency/")
+}
+unzipJar.dependsOn(deleteFilesJarDir)
+bootJar.finalizedBy(unzipJar)
 
 import java.text.SimpleDateFormat
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile

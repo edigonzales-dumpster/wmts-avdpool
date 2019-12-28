@@ -7,7 +7,10 @@ EXPOSE 8080
 
 WORKDIR /home/avdpool
 
-COPY build/libs/wmts-avdpool-*.jar /home/avdpool/app.jar
+ARG DEPENDENCY=build/dependency
+COPY ${DEPENDENCY}/BOOT-INF/lib /home/avdpool/app/lib
+COPY ${DEPENDENCY}/META-INF /home/avdpool/app/META-INF
+COPY ${DEPENDENCY}/BOOT-INF/classes /home/avdpool/app
 RUN chown -R 1001:0 /home/avdpool && \
     chmod -R g=u /home/avdpool
 
