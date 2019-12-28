@@ -19,9 +19,9 @@ deploy:
     script: ./gradlew pushDockerImages
     on:
       branch: master    
-  - provider: script
-    skip_cleanup: true
-    script: curl --insecure -X POST $PORTAINER_HOOK
-    on:
-      branch: master    
+  # - provider: script
+  #   skip_cleanup: true
+  #   script: curl --insecure -X POST $PORTAINER_HOOK
+  #   on:
+  #     branch: master    
 

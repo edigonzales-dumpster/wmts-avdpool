@@ -40,27 +40,27 @@ public class IntegrationRoute extends RouteBuilder {
     @Value("${app.initialImportDelay}")
     private String initialImportDelay;
 
-    @Value("${app.dbHostWmts}")
-    private String dbHostWmts;
+    @Value("${app.dbHost}")
+    private String dbHost;
     
-    @Value("${app.dbPortWmts}")
-    private String dbPortWmts;
+    @Value("${app.dbPort}")
+    private String dbPort;
     
-    @Value("${app.dbDatabaseWmts}")
-    private String dbDatabaseWmts;
+    @Value("${app.dbDatabase}")
+    private String dbDatabase;
     
-    @Value("${app.dbSchemaWmts}")
-    private String dbSchemaWmts;
+    @Value("${app.dbSchema}")
+    private String dbSchema;
 
-    @Value("${app.dbUserWmts}")
-    private String dbUserWmts;
+    @Value("${app.dbUser}")
+    private String dbUser;
 
-    @Value("${app.dbPwdWmts}")
-    private String dbPwdWmts;
+    @Value("${app.dbPwd}")
+    private String dbPwd;
 
     @Override
     public void configure() throws Exception {
-        from("ftp://"+ftpUserInfogrips+"@"+ftpUrlInfogrips+"/\\dm01avso24lv95\\itf\\?password="+ftpPwdInfogrips+"&antInclude=*.zip&autoCreate=false&noop=true&readLock=changed&stepwise=false&separator=Windows&passiveMode=true&binary=true&delay="+downloadDelay+"&initialDelay="+initialDownloadDelay+"&idempotentRepository=#fileConsumerRepo&idempotentKey=ftp-${file:name}-${file:size}-${file:modified}")
+        from("ftp://"+ftpUserInfogrips+"@"+ftpUrlInfogrips+"/\\dm01avso24lv95\\itf\\?password="+ftpPwdInfogrips+"&antInclude=*.zip&autoCreate=false&noop=true&readLock=changed&stepwise=false&separator=Windows&passiveMode=true&binary=true&maxMessagesPerPoll=120&delay="+downloadDelay+"&initialDelay="+initialDownloadDelay+"&idempotentRepository=#fileConsumerRepo&idempotentKey=ftp-${file:name}-${file:size}-${file:modified}")
         //from("ftp://"+ftpUserInfogrips+"@"+ftpUrlInfogrips+"/\\dm01avso24lv95\\itf\\?password="+ftpPwdInfogrips+"&antInclude=240100.zip&autoCreate=false&noop=true&readLock=changed&stepwise=false&separator=Windows&passiveMode=true&binary=true&delay="+downloadDelay+"&initialDelay="+initialDownloadDelay+"&idempotentRepository=#fileConsumerRepo&idempotentKey=ftp-${file:name}-${file:size}-${file:modified}")
         .routeId("_download_")
         .log(LoggingLevel.INFO, "Downloading and unzipping route: ${in.header.CamelFileNameOnly}")
@@ -74,15 +74,15 @@ public class IntegrationRoute extends RouteBuilder {
             .end()
         .end();
 
-        from("file://"+pathToUnzipFolder+"/?noop=true&charset=ISO-8859-1&include=.*\\.itf&delay="+importDelay+"&initialDelay="+initialImportDelay+"&readLock=changed&idempotentRepository=#fileConsumerRepo&idempotentKey=ili2pg-${file:name}-${file:size}-${file:modified}")
+        from("file://"+pathToUnzipFolder+"/?noop=true&charset=ISO-8859-1&include=.*\\.itf&delay="+importDelay+"&initialDelay="+initialImportDelay+"&readLock=changed&maxMessagesPerPoll=60&idempotentRepository=#fileConsumerRepo&idempotentKey=ili2pg-${file:name}-${file:size}-${file:modified}")
         .routeId("_ili2pg_")
         .log(LoggingLevel.INFO, "Importing File: ${in.header.CamelFileNameOnly}")
-        .setProperty("dbhost", constant(dbHostWmts))
-        .setProperty("dbport", constant(dbPortWmts))
-        .setProperty("dbdatabase", constant(dbDatabaseWmts))
-        .setProperty("dbschema", constant(dbSchemaWmts))
-        .setProperty("dbusr", constant(dbUserWmts))
-        .setProperty("dbpwd", constant(dbPwdWmts))
+        .setProperty("dbhost", constant(dbHost))
+        .setProperty("dbport", constant(dbPort))
+        .setProperty("dbdatabase", constant(dbDatabase))
+        .setProperty("dbschema", constant(dbSchema))
+        .setProperty("dbusr", constant(dbUser))
+        .setProperty("dbpwd", constant(dbPwd))
         .setProperty("dataset", simple("${header.CamelFileName.substring(0,4)}"))
         .process(new Ili2pgReplaceProcessor());
     }

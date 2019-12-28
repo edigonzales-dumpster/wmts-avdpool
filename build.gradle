@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '2.1.10.RELEASE'
+	id 'org.springframework.boot' version '2.2.2.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
     id "com.bmuschko.docker-remote-api" version "4.4.1"
@@ -10,7 +10,7 @@ apply from: "$rootDir/gradle/versioning.gradle"
 group = 'ch.so.agi.avdpool'
 
 ext {
-    apacheCamelVersion = "3.0.0-RC3"
+    apacheCamelVersion = "3.0.0"
 }
 
 sourceCompatibility = '1.8'
@@ -33,7 +33,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation "org.apache.camel:camel-spring-boot-starter:${apacheCamelVersion}"
+	implementation "org.apache.camel.springboot:camel-spring-boot-starter:${apacheCamelVersion}"
     implementation "org.apache.camel:camel-support:${apacheCamelVersion}"   
     implementation "org.apache.camel:camel-ftp:${apacheCamelVersion}"
     implementation "org.apache.camel:camel-mail:${apacheCamelVersion}"	
