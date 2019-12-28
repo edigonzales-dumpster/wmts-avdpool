@@ -60,6 +60,12 @@ public class IntegrationRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
+        // TODO: send email
+        onException(Exception.class)
+        .continued(true)
+        .log(LoggingLevel.ERROR, simple("${exception.stacktrace}").getText())
+        .log(LoggingLevel.ERROR, simple("${exception.message}").getText());
+        
         from("ftp://"+ftpUserInfogrips+"@"+ftpUrlInfogrips+"/\\dm01avso24lv95\\itf\\?password="+ftpPwdInfogrips+"&antInclude=*.zip&autoCreate=false&noop=true&readLock=changed&stepwise=false&separator=Windows&passiveMode=true&binary=true&maxMessagesPerPoll=120&delay="+downloadDelay+"&initialDelay="+initialDownloadDelay+"&idempotentRepository=#fileConsumerRepo&idempotentKey=ftp-${file:name}-${file:size}-${file:modified}")
         //from("ftp://"+ftpUserInfogrips+"@"+ftpUrlInfogrips+"/\\dm01avso24lv95\\itf\\?password="+ftpPwdInfogrips+"&antInclude=240100.zip&autoCreate=false&noop=true&readLock=changed&stepwise=false&separator=Windows&passiveMode=true&binary=true&delay="+downloadDelay+"&initialDelay="+initialDownloadDelay+"&idempotentRepository=#fileConsumerRepo&idempotentKey=ftp-${file:name}-${file:size}-${file:modified}")
         .routeId("_download_")
