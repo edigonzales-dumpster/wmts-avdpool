@@ -1,6 +1,6 @@
-# wmts-avdpool
 [![Build Status](https://github.com/edigonzales/wmts-avdpool/workflows/CI/CD/badge.svg)](https://github.com/edigonzales/wmts-avdpool/workflows/CI/CD/badge.svg)
 
+# wmts-avdpool
 
 ## Developing
 ```
