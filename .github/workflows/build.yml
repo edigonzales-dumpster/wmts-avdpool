@@ -39,6 +39,5 @@ jobs:
           docker push $DOCKER_ACCOUNT/$DOCKER_REPO:latest 
           docker push $DOCKER_ACCOUNT/$DOCKER_REPO:1.0.$BUILD_NUMBER
         env:
-          PASSWORD: ${{secrets.GITHUB_TOKEN}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
           DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
