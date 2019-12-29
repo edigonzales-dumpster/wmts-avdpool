@@ -18,4 +18,4 @@ USER 1001
 
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/home/avdpool/app.jar"]
 
-HEALTHCHECK --interval=30s --timeout=30s --start-period=60s CMD curl http://localhost:8080/actuator/health
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s CMD curl http://localhost:8080/actuator/health
