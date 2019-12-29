@@ -1,5 +1,5 @@
 # wmts-avdpool
-[![Build Status](https://travis-ci.org/edigonzales/wmts-avdpool.svg?branch=master)](https://travis-ci.org/edigonzales/wmts-avdpool)
+[![Build Status](https://github.com/edigonzales/wmts-avdpool/workflows/CI/CD/badge.svg)](https://github.com/edigonzales/wmts-avdpool/workflows/CI/CD/badge.svg)
 
 
 ## Developing
