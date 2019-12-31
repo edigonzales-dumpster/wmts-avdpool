@@ -28,3 +28,4 @@ sogis/wmts-db:latest
 
 ## TODO
 - ENV-Vars anpassen an `/camel`. Nur in `wmts-stack`?
+- Import-Zeiten via Cron, damit währen Seeden nicht importiert wird.
