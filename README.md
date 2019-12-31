@@ -25,3 +25,6 @@ docker run --rm --name wmts-db -p 54321:5432 --hostname primary \
 -e PG_READ_USER=ogc_server -e PG_READ_PASSWORD=ogc_server \
 sogis/wmts-db:latest
 ```
+
+## TODO
+- ENV-Vars anpassen an `/camel`. Nur in `wmts-stack`?
